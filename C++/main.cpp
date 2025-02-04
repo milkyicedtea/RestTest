@@ -7,7 +7,7 @@
 #include <memory_resource>
 
 struct User {
-    int id;
+    int id{};
     std::string username;
     std::string email;
     std::string password;
@@ -40,7 +40,7 @@ static constexpr size_t get_chunk_size(const size_t total_size, const size_t num
 class UserGenerator {
 public:
     static constexpr size_t NUM_THREADS = 8;
-    UserGenerator() : thread_pool(NUM_THREADS) {}
+    UserGenerator() = default;
     static constexpr size_t TOTAL_USERS = 10'000;
 
     std::string generate_users() {
@@ -67,18 +67,17 @@ public:
             email_buffer.reserve(MAX_EMAIL_SIZE);
             password_buffer.reserve(MAX_PASSWORD_SIZE);
 
-            std::string is  ;
             for (size_t i = start_idx; i < end_idx; i++) {
-                is = std::to_string(i);
+                const std::string is = std::to_string(i);
                
                 // Generate username
                 users[i].id = i;
 
                 users[i].username = USER_PREFIX;
-                users[i].username += is
+                users[i].username += is;
 
                 users[i].email = users[i].username;
-                users[i].email += EMAIL_SUFFIX
+                users[i].email += EMAIL_SUFFIX;
 
                 users[i].password = PASSWORD_PREFIX;
                 users[i].password += is;
@@ -147,6 +146,7 @@ int main() {
     });
 
     app.port(8040)
-       .concurrency(std::thread::hardware_concurrency())
-       .run();
+        .concurrency(std::thread::hardware_concurrency())
+        .loglevel(crow::LogLevel::Warning)
+        .run();
 }
