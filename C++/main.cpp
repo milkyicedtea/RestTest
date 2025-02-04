@@ -67,26 +67,21 @@ public:
             email_buffer.reserve(MAX_EMAIL_SIZE);
             password_buffer.reserve(MAX_PASSWORD_SIZE);
 
+            std::string is  ;
             for (size_t i = start_idx; i < end_idx; i++) {
+                is = std::to_string(i);
+               
                 // Generate username
-                username_buffer.clear();
-                username_buffer += USER_PREFIX;
-                username_buffer += std::to_string(i);
-
-                // Generate email
-                email_buffer.clear();
-                email_buffer += username_buffer;
-                email_buffer += EMAIL_SUFFIX;
-
-                // Generate password
-                password_buffer.clear();
-                password_buffer += PASSWORD_PREFIX;
-                password_buffer += std::to_string(i);
-
                 users[i].id = i;
-                users[i].username = username_buffer;
-                users[i].email = email_buffer;
-                users[i].password = password_buffer;
+
+                users[i].username = USER_PREFIX;
+                users[i].username += is
+
+                users[i].email = users[i].username;
+                users[i].email += EMAIL_SUFFIX
+
+                users[i].password = PASSWORD_PREFIX;
+                users[i].password += is;
             }
         };
 
