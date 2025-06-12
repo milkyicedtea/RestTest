@@ -1,9 +1,0 @@
-# environment
-.idea
-.env
-
-# rust build
-/target
-
-# dependencies
-Cargo.lock

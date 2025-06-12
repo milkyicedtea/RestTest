@@ -1,6 +1,7 @@
 # Build
 
-FROM ubuntu:24.04 AS builder
+FROM debian:bookworm-slim AS builder
+WORKDIR /app
 
 # build dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,41 +22,36 @@ RUN git clone https://github.com/Microsoft/vcpkg.git /vcpkg \
     && /vcpkg/bootstrap-vcpkg.sh
 
 # install c++ packages
-RUN /vcpkg/vcpkg install crow:x64-linux-dynamic fmt:x64-linux-dynamic
+RUN /vcpkg/vcpkg install crow:x64-linux-dynamic fmt:x64-linux-dynamic glaze:x64-linux-dynamic
 
 # copy source
-WORKDIR /app
 COPY . .
 
 # build project
 RUN cmake -B build -S . \
     -DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake \
     -DCMAKE_BUILD_TYPE=Release \
+    -DVCPKG_TARGET_TRIPLE=x64-linux-dynamic \
+    -DIN_DOCKER=ON \
     && cmake --build build
 
 
 # Runtime
-FROM ubuntu:24.04
+FROM debian:bookworm-slim
 
 # install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-# create non-root user
-RUN useradd -m -s /bin/bash appuser
-
-# create directories for assets and config
-RUN mkdir -p /app/assets /app/config \
-    && chown -R appuser:appuser /app
-
-# copy built executable
-COPY --from=builder /app/build/CrowAPI /app/
-COPY --chown=appuser:appuser assets/ /app/assets
-
-USER appuser
 WORKDIR /app
+
+
+# copy built executable and deps
+COPY --from=builder /app/build/crow-resttest .
+
+RUN chmod +x ./crow-resttest
 
 EXPOSE 8000
 
-CMD ["./CrowAPI"]
+CMD ["./crow-resttest"]

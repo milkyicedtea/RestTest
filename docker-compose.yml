@@ -1,0 +1,107 @@
+services:
+  gochi-app:
+    build:
+      context: Go/chi
+      dockerfile: Dockerfile
+    container_name: gochi-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - Go/chi/.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+
+  rustaxum-app:
+    build:
+      context: Rust/axum
+      dockerfile: Dockerfile
+    container_name: rustaxum-app
+    ports:
+      - "8081:8080"
+    env_file:
+      - Rust/axum/.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+
+  zigzap-app:
+    build:
+      context: Zig/zap
+      dockerfile: Dockerfile
+    container_name: zigzap-app
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+
+  cppcrow-app:
+    build:
+      context: C++/crow
+      dockerfile: Dockerfile
+    container_name: cppcrow-app
+    ports:
+      - "8083:8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: resttest
+      POSTGRES_USER: resttest
+      POSTGRES_PASSWORD: resttest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./docker/postgres:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+
+  wrk:
+    image: williamyeh/wrk
+    container_name: wrk
+    entrypoint: ["/bin/sh", "-c"]
+    # Example test: runs 10s, 10 threads, 100 connections
+    command: ["/scripts/bench.sh"]
+    volumes:
+      - ./wrk-results:/tmp/results
+      - ./wrk-scripts:/scripts
+    depends_on:
+      - gochi-app
+      - rustaxum-app
+      - zigzap-app
+      - cppcrow-app
+    networks:
+      - backend
+
+volumes:
+  pg_data:
+  redis_data:
+  grafana_data:
+
+networks:
+  backend:
+    driver: bridge

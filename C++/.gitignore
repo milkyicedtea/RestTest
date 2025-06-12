@@ -1,7 +1,5 @@
-.idea
-build/
-assets/*
-!assets/.gitkeep
-cmake-build*/
-vcpkg*/
-.env
+**/build/
+**/assets/*
+**/!assets/.gitkeep
+**/cmake-build-*
+**/vcpkg*/
