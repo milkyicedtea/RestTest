@@ -52,6 +52,6 @@ COPY --from=builder /app/build/crow-resttest .
 
 RUN chmod +x ./crow-resttest
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["./crow-resttest"]

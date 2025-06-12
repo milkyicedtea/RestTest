@@ -48,7 +48,7 @@ services:
       dockerfile: Dockerfile
     container_name: cppcrow-app
     ports:
-      - "8083:8000"
+      - "8083:8080"
     depends_on:
       - postgres
       - redis
