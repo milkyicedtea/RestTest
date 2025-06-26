@@ -1,15 +1,16 @@
 mod serialization_handlers;
 
+use axum::Json;
 use axum::routing::get;
-use crate::serialization_handlers::handle_user_serialization;
+use chrono::SubsecRound;
 
 #[derive(serde::Serialize)]
-pub struct User {
-    id: u32,
-    username: String,
-    email: String,
-    password: String
+pub struct Health {
+    status: &'static str,
+    timestamp: chrono::DateTime<chrono::Utc>,
 }
+
+
 
 #[tokio::main]
 async fn main() {
@@ -18,8 +19,17 @@ async fn main() {
     let app = axum::Router::new()
         .layer(tower_http::trace::TraceLayer::new_for_http())
         
+        .route("/health", get(|| async {
+            let health = Health{
+                status: "healthy",
+                timestamp: chrono::Utc::now(),
+            };
+
+            Json(health)
+        }))
+        
         // static serialization route
-        .route("/user/json", get(handle_user_serialization));
+        .route("/user/json", get(serialization_handlers::handle_user_serialization));
 
     let addr = std::net::SocketAddr::from(([0, 0, 0, 0], 8080));
     println!("Listening on {}", addr);

@@ -26,7 +26,7 @@ func InitPgxPool(ctx context.Context, cfg *Config) error {
 			1, // min connections, can also be from config
 		)
 
-		log.Printf("PG connStr: %s", connStr)
+		//log.Printf("PG connStr: %s", connStr)
 
 		pgxConfig, err := pgxpool.ParseConfig(connStr)
 		if err != nil {
