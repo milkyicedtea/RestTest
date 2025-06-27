@@ -1,5 +1,6 @@
 import type { LatencyObjects } from "./LanguageCard";
 import { ResponsiveLine } from "@nivo/line";
+import { useGraphValue } from "@/context/graphContext";
 
 interface GraphData {
   data: LatencyObjects[];
@@ -7,6 +8,7 @@ interface GraphData {
 }
 
 export default function LanguageGraph({ data, lang_name }: GraphData) {
+  const { maxYValue } = useGraphValue();
   const transformedData = [
     {
       id: lang_name,
@@ -26,7 +28,7 @@ export default function LanguageGraph({ data, lang_name }: GraphData) {
           yScale={{
             type: "linear",
             min: "auto",
-            max: "auto",
+            max: maxYValue,
             stacked: true,
             reverse: false,
           }}
