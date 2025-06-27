@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"log"
@@ -14,18 +15,9 @@ import (
 	"time"
 )
 
-type StaticUser struct {
-	Id       int      `json:"id"`
-	Username string   `json:"username"`
-	Email    string   `json:"email"`
-	IsActive bool     `json:"is_active"`
-	Roles    []string `json:"roles"`
-}
-
-type ReadUser struct {
-	//Id       int    `json:"id"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
+type Health struct {
+	Status    string    `json:"status"`
+	Timestamp time.Time `json:"timestamp"`
 }
 
 func main() {
@@ -38,12 +30,12 @@ func main() {
 	}
 
 	if err := InitPgxPool(ctx, cfg); err != nil {
-		log.Fatalf("Failed to initialize PostgreSQL pool: %v", err)
+		_ = fmt.Errorf("Failed to initialize PostgreSQL pool: %v\nDatabase tests will fail and/or may crash the program", err)
 	}
 	defer ClosePgxPool()
 
 	if err := InitRedis(ctx, cfg); err != nil {
-		log.Fatalf("Failed to initialize Redis: %v", err)
+		_ = fmt.Errorf("Failed to initialize Redis: %v\n Redis tests will fail and/or may crash the program", err)
 	}
 	defer CloseRedis()
 
@@ -52,10 +44,9 @@ func main() {
 
 	// Health check endpoint
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		health := map[string]interface{}{
-			"status":    "healthy",
-			"timestamp": time.Now().UTC(),
-			"version":   "1.0.0",
+		health := Health{
+			Status:    "healthy",
+			Timestamp: time.Now().UTC(),
 		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(health)

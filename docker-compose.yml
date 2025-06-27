@@ -4,8 +4,8 @@ services:
       context: Go/chi
       dockerfile: Dockerfile
     container_name: gochi-app
-    ports:
-      - "8080:8080"
+#    ports:
+#      - "8080:8080"
     env_file:
       - Go/chi/.env
     depends_on:
@@ -19,8 +19,8 @@ services:
       context: Rust/axum
       dockerfile: Dockerfile
     container_name: rustaxum-app
-    ports:
-      - "8081:8080"
+#    ports:
+#      - "8081:8080"
     env_file:
       - Rust/axum/.env
     depends_on:
@@ -34,8 +34,8 @@ services:
       context: Zig/zap
       dockerfile: Dockerfile
     container_name: zigzap-app
-    ports:
-      - "8082:8080"
+#    ports:
+#      - "8082:8080"
     depends_on:
       - postgres
       - redis
@@ -47,8 +47,21 @@ services:
       context: C++/crow
       dockerfile: Dockerfile
     container_name: cppcrow-app
-    ports:
-      - "8083:8080"
+#    ports:
+#      - "8083:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+
+  tsbun-app:
+    build:
+      context: JavaScript-TypeScript/bun
+      dockerfile: Dockerfile
+    container_name: tsbun-app
+#    ports:
+#      - "8084:8080"
     depends_on:
       - postgres
       - redis
@@ -84,7 +97,6 @@ services:
     image: williamyeh/wrk
     container_name: wrk
     entrypoint: ["/bin/sh", "-c"]
-    # Example test: runs 10s, 10 threads, 100 connections
     command: ["/scripts/bench.sh"]
     volumes:
       - ./wrk-results:/tmp/results
@@ -94,6 +106,7 @@ services:
       - rustaxum-app
       - zigzap-app
       - cppcrow-app
+      - tsbun-app
     networks:
       - backend
 

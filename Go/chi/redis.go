@@ -17,7 +17,9 @@ func InitRedis(ctx context.Context, cfg *Config) error {
 	var err error
 	redisOnce.Do(func() {
 		addr := fmt.Sprintf("%s:%s", cfg.RedisHost, cfg.RedisPort)
-		log.Printf("Initializing Redis at %s", addr)
+
+		//log.Printf("Initializing Redis at %s", addr)
+
 		redisClient = redis.NewClient(&redis.Options{
 			Addr:     addr,
 			Password: cfg.RedisPassword,

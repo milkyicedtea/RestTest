@@ -4,7 +4,7 @@ PrintTest () {
 
 #PrintTest "Go" "Chi"
 #source /scripts/go-chi.sh
-#
+
 #PrintTest "Rust" "Axum"
 #source /scripts/rust-axum.sh
 
@@ -13,3 +13,6 @@ PrintTest () {
 
 PrintTest "C++" "Crow"
 source /scripts/cpp-crow.sh
+
+#PrintTest "Typescript" "Bun"
+#source /scripts/ts-bun.sh

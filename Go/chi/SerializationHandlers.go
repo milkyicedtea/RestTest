@@ -6,6 +6,14 @@ import (
 	"net/http"
 )
 
+type StaticUser struct {
+	Id       int      `json:"id"`
+	Username string   `json:"username"`
+	Email    string   `json:"email"`
+	IsActive bool     `json:"is_active"`
+	Roles    []string `json:"roles"`
+}
+
 func HandleUserSerialization(w http.ResponseWriter, r *http.Request) {
 	user, err := json.Marshal(StaticUser{
 		Id:       1,
