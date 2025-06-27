@@ -64,7 +64,7 @@ export default function LanguageCard({
               <strong>Total requests:</strong> {requests}
             </p>
             <p className="info-text">
-              <strong>Duration (mus):</strong> {duration_in_microseconds}
+              <strong>Duration (μs):</strong> {duration_in_microseconds}
             </p>
             <p className="info-text">
               <strong>Requests (/s):</strong> {requests_per_sec}

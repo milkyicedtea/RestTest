@@ -41,6 +41,21 @@ export default function LanguageGraph({ data, lang_name }: GraphData) {
           pointLabelYOffset={-12}
           enableTouchCrosshair={true}
           useMesh={true}
+          tooltip={({ point }) => (
+            <div
+              style={{
+                background: "white",
+                padding: "9px 12px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                color: "black",
+                fontSize: "10px",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <div>{point.data.yFormatted} μs</div>
+            </div>
+          )}
         />
       </div>
     </>
