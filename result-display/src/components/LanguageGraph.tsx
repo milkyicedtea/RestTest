@@ -24,7 +24,7 @@ export default function LanguageGraph({ data, lang_name }: GraphData) {
       <div className="graph-container">
         <ResponsiveLine
           data={transformedData}
-          margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
+          margin={{ top: 20, right: 20, bottom: 50, left: 70 }}
           yScale={{
             type: "linear",
             min: "auto",
@@ -33,7 +33,7 @@ export default function LanguageGraph({ data, lang_name }: GraphData) {
             reverse: false,
           }}
           axisBottom={{ legend: "percentile", legendOffset: 36 }}
-          axisLeft={{ legend: "latency (mus)", legendOffset: -50 }}
+          axisLeft={{ legend: "latency (mus)", legendOffset: -60 }}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}

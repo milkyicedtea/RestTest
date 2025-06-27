@@ -1,7 +1,7 @@
 .card-container {
   display: flex;
   flex-direction: column;
-  width: 42vw;
+  width: 44vw;
   min-width: 300px;
   border-width: 1px;
   border-style: solid;
@@ -48,10 +48,11 @@
 }
 
 .graph-container {
-  height: 300px;
+  height: 330px;
   width: 100%;
 }
 
 .info-text {
   font-size: 12px;
+  margin-top: 0.5rem;
 }

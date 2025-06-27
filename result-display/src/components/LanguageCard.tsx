@@ -61,16 +61,21 @@ export default function LanguageCard({
         <div className="card-content">
           <div className="card-column-left">
             <p className="info-text">
-              <strong>Total requests:</strong> {requests}
+              <strong style={{ whiteSpace: "nowrap" }}>Total requests:</strong>{" "}
+              {requests}
             </p>
             <p className="info-text">
-              <strong>Duration (μs):</strong> {duration_in_microseconds}
+              <strong style={{ whiteSpace: "nowrap" }}>Duration (μs):</strong>{" "}
+              {duration_in_microseconds}
             </p>
             <p className="info-text">
-              <strong>Requests (/s):</strong> {requests_per_sec}
+              <strong style={{ whiteSpace: "nowrap" }}>Requests (/s):</strong>{" "}
+              {requests_per_sec}
             </p>
             <p className="info-text">
-              <strong>Bytes Moved (/s):</strong>
+              <strong style={{ whiteSpace: "nowrap" }}>
+                Bytes Moved (/s):
+              </strong>
               {bytes_transfer_per_sec}
             </p>
             <Accordion.Root collapsible>
@@ -79,7 +84,11 @@ export default function LanguageCard({
                 style={{ border: "none" }}
               >
                 <Accordion.ItemTrigger>
-                  <Span flex="1" className="info-text">
+                  <Span
+                    flex="1"
+                    className="info-text"
+                    style={{ marginTop: "0" }}
+                  >
                     {errorsAccordian.title}
                   </Span>
                   <Accordion.ItemIndicator />
