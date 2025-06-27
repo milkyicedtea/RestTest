@@ -1,0 +1,14 @@
+body {
+  background-color: #1c1b1b;
+  color: white;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
