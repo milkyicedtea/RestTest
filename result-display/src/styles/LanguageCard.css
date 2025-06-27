@@ -1,0 +1,58 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  width: 44vw;
+  min-width: 300px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card-column-left {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lang-logo {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.lang-name {
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.framework-list {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.graph-container {
+  height: 330px;
+  width: 100%;
+}
+
+.info-text {
+  font-size: 12px;
+  margin-top: 0.5rem;
+}

@@ -1,0 +1,17 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  border-bottom: solid;
+  position: sticky;
+  top: 0;
+  background: #1c1b1b;
+  z-index: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+}
